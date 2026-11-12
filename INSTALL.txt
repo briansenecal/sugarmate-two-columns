@@ -1,0 +1,16 @@
+SUGARMATE TWO COLUMNS - UPDATE 1.5
+
+Replace layout.css and manifest.json in your existing extension folder.
+Open vivaldi://extensions, click Reload on Sugarmate Two Columns, then
+refresh Sugarmate or reopen its app window.
+
+Insights titles and time-range labels are exactly 85% of their previous
+font size. Values and data graphics are enlarged separately. Main values
+grow with card width, up to 72 CSS pixels before the panel scale.
+
+Keep your preferred window height. Widen it to give the values more room.
+Once the graph column reaches 620 CSS pixels, extra width goes to Insights.
+The full-height two-row layout, graph scale, and current reading are kept.
+
+Styles were targeted using the current live page structure. Structure checks
+passed; visual verification after loading this update is pending.

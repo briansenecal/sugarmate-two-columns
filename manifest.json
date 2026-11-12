@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Sugarmate Two Columns",
+  "version": "1.5.0",
+  "description": "A personal compact layout: graph on the left, Insights and Feed on the right.",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.sugarmate.io/*"
+      ],
+      "css": [
+        "layout.css"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

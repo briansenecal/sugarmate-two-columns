@@ -1,0 +1,205 @@
+/* Only the home dashboard is affected. Prefix selectors tolerate CSS build hashes.
+   Scale graph and panels independently; the current reading is never zoomed. */
+@media (min-width: 600px) {
+  body:has([class*="Home_container__"]) {
+    --sm-left: min(54vw, 620px);
+  }
+
+  body:has([class*="Home_container__"]) [class*="UserHeader_container__"] {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: var(--sm-left) !important;
+    height: 80px !important;
+    box-sizing: border-box !important;
+    z-index: 2;
+  }
+
+  [class*="Home_container__"] {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    display: grid !important;
+    grid-template-columns: var(--sm-left) minmax(0, 1fr) !important;
+    grid-template-rows: 40px minmax(0, 1fr) !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  [class*="Home_container__"] > [class*="Home_graph__"] {
+    grid-area: 1 / 1 / 3 / 2 !important;
+    box-sizing: border-box !important;
+    padding-top: 80px !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    overflow: auto !important;
+  }
+
+  [class*="Home_container__"] > #multi-tab-header {
+    grid-area: 1 / 2 / 2 / 3 !important;
+    display: flex !important;
+    min-width: 0 !important;
+    height: 40px !important;
+    box-sizing: border-box !important;
+    border-left: 1px solid #7774;
+  }
+
+  [class*="Home_container__"] > #tiles-grid-view,
+  [class*="Home_container__"] > #feed-content {
+    grid-area: 2 / 2 / 3 / 3 !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border-left: 1px solid #7774;
+  }
+
+  #tiles-grid-view > [class*="InsightsHeader_container__"],
+  #feed-content > [class*="FeedHeader_wrapper__"] {
+    display: none !important;
+  }
+
+  /* Do not override display: the original tab buttons control visibility. */
+  #tiles-grid-view > [class*="Insights_tiles__"] {
+    zoom: 0.9;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: none !important;
+    gap: 8px !important;
+    grid-auto-rows: 144px !important;
+    align-content: start !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    overflow: auto !important;
+  }
+
+  #feed-content > #scrollbar {
+    zoom: 0.9;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* The chart's date, points, overlays, and axes scale together.
+   The current reading is in a separate header and retains its original size. */
+@media (min-width: 600px) {
+  [class*="Home_graph__"] > [class*="Header_wrapper__"],
+  [class*="Home_graph__"] > [class*="Graph_content__"] { zoom: 0.66; }
+  #tiles-grid-view [class*="Tile_container__"] {
+    height: 144px !important;
+    min-height: 144px !important;
+  }
+}
+@media (min-width: 600px) and (max-height: 280px) {
+  [class*="Home_graph__"] > [class*="Header_wrapper__"],
+  [class*="Home_graph__"] > [class*="Graph_content__"] { zoom: 0.5; }
+  #tiles-grid-view > [class*="Insights_tiles__"] { zoom: 0.8; }
+}
+
+/* Sugarmate measures its viewport in screen pixels. Under CSS zoom those
+   inline dimensions were applied a second time, shrinking the scroll viewport.
+   Give its zero-sized measurement wrapper and virtual viewport the true size. */
+@media (min-width: 600px) {
+  #graph > div[style*="height: 0px"][style*="width: 0px"] {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  #graph > div[style*="height: 0px"][style*="width: 0px"] > div[style*="direction: rtl"] {
+    width: 100% !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+  }
+  #graph > div[style*="height: 0px"][style*="width: 0px"] > div[style*="direction: rtl"]::-webkit-scrollbar {
+    display: none !important;
+  }
+}
+@media (min-width: 600px) and (min-height: 325px) {
+  [class*="Home_graph__"] > [class*="Header_wrapper__"],
+  [class*="Home_graph__"] > [class*="Graph_content__"] { zoom: 0.95; }
+}
+@media (min-width: 600px) and (min-height: 360px) {
+  [class*="Home_graph__"] > [class*="Header_wrapper__"],
+  [class*="Home_graph__"] > [class*="Graph_content__"] { zoom: 0.85; }
+}
+
+/* Fill the Insights panel with two equally tall rows. Compensate for the
+   panel's local zoom so its bottom reaches the window's available bottom. */
+@media (min-width: 600px) {
+  #tiles-grid-view > [class*="Insights_tiles__"] {
+    height: calc((100dvh - 40px) / 0.9) !important;
+    max-height: none !important;
+    box-sizing: border-box !important;
+    grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: minmax(144px, auto) !important;
+    align-content: stretch !important;
+  }
+  #tiles-grid-view [class*="Tile_container__"] {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  #tiles-grid-view [class*="Tile_tile__"] {
+    height: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+@media (min-width: 600px) and (max-height: 280px) {
+  #tiles-grid-view > [class*="Insights_tiles__"] {
+    height: calc((100dvh - 40px) / 0.8) !important;
+  }
+}
+
+/* Separate label typography from data typography. Additional window width
+   goes to Insights after the graph column reaches 620 CSS pixels. */
+@media (min-width: 600px) {
+  #tiles-grid-view [class*="Tile_tile__"] {
+    container-type: inline-size;
+  }
+  #tiles-grid-view [class*="Tile_title__"] {
+    font-size: 13.6px !important;
+    line-height: 1.15 !important;
+  }
+  #tiles-grid-view [class*="Tile_timeSpan__"] {
+    font-size: 10.2px !important;
+    line-height: 1.2 !important;
+  }
+  #tiles-grid-view [class*="Tile_value__"] {
+    font-size: clamp(40px, 30cqw, 72px) !important;
+    line-height: 1 !important;
+  }
+  #tiles-grid-view [class*="Tile_valuePercentSymbol__"] {
+    font-size: 0.45em !important;
+  }
+  #tiles-grid-view [class*="Percentage_percentage__"] {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  #tiles-grid-view [class*="Percentage_percentageValue__"] {
+    font-size: 36px !important;
+  }
+  #tiles-grid-view [class*="Quartiles_quartiles__"] {
+    height: 80px !important;
+  }
+  #tiles-grid-view [class*="Quartiles_quartile1__"],
+  #tiles-grid-view [class*="Quartiles_quartile3__"] {
+    font-size: clamp(14px, 9cqw, 22px) !important;
+  }
+  #tiles-grid-view [class*="Quartiles_quartile2__"] {
+    font-size: clamp(20px, 12cqw, 30px) !important;
+  }
+  #tiles-grid-view [class*="DistributionPercentages_distributionPercentages__"] {
+    height: 56px !important;
+  }
+  #tiles-grid-view [class*="DistributionPercentages_distributionPercentageValue__"] {
+    font-size: clamp(14px, 9cqw, 24px) !important;
+  }
+  #tiles-grid-view [class*="DistributionPercentages_distributionPercentageSymbol__"] {
+    font-size: 0.65em !important;
+  }
+}
